@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  insta_id: 1
+  insta_name: MyString
+  last_activity: 2015-04-10 21:48:45
+  admin: 1
+
+two:
+  insta_id: 1
+  insta_name: MyString
+  last_activity: 2015-04-10 21:48:45
+  admin: 1

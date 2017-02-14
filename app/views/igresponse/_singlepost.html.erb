@@ -1,0 +1,32 @@
+<% viewmode = "normal" if local_assigns[:viewmode].nil? %>
+<tr>
+<td>
+  
+<div class="col-xs-4">
+<img src="<%= picture["images"]["low_resolution"]["url"] %>" class="center-block img-responsive img-rounded"><br>
+<%= link_to "GramSend this post", instapic_path(picture["id"]), class: "center-block btn btn-danger multi-line-button" %>
+</div>
+
+<div class="col-xs-8">
+<h3>
+@<%= cleanup(picture["user"]["username"]) %>
+<% if viewmode == "mainfeed" %>
+<a href="<%= friendfeed_path(picture["user"]["id"]) %>" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-camera"></i></a>
+<% end %>
+</h3>
+<% unless picture["caption"].nil? %>
+<p><strong><%= simple_format(cleanup(picture["caption"]["text"]))  %></strong></p>
+<% end %>
+<% unless picture["location"].nil? %>
+<% unless picture["location"]["name"].nil? %>
+<p><small><i class="glyphicon glyphicon-map-marker"></i> <%= cleanup(picture["location"]["name"]) %></small></p>
+<% end %>
+<% end %>
+<p><small><i class="glyphicon glyphicon-calendar"></i> <%= DateTime.strptime(picture["created_time"],'%s').strftime("%B %-d, %Y") %></small></p>
+<p><small><i class="glyphicon glyphicon-heart"></i> <%= picture["likes"]["count"] %> likes</small></p>
+<p><small><i class="glyphicon glyphicon-comment"></i>  <%= picture["comments"]["count"] %> comments</small></p>
+</div>
+
+
+</td>
+</tr>

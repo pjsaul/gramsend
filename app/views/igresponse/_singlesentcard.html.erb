@@ -1,0 +1,49 @@
+<tr>
+<td>
+<div class="col-xs-6">
+<img src="<%= card.thumbnail_front_url %>" class="img-thumbnail img-responsive listthumb">
+</div>
+
+<div class="col-xs-6">
+  
+<div class="row">
+<small>
+<strong>GramSend created:</strong> <%= card.sent_date.strftime("%B %-d, %Y") %><br>
+<strong>Expected delivery date:</strong> <%= card.expected_delivery_date.strftime("%B %-d, %Y") %>
+</small>
+</div>
+
+<div class="row">
+  
+<h5>Post by @<%= card.insta_postusername %> on <%= card.insta_date.strftime("%B %-d, %Y") %> <%= link_to "<i class=\"glyphicon glyphicon-refresh\"></i> ".html_safe, instapic_path(card.insta_id) %></h5>
+  
+<div class="col-xs-6">
+<strong>From:</strong><br>
+<%= card.from_name %><br>
+<%= card.from_address_one %><br>
+<% unless card.from_address_two.nil? or card.from_address_two == '' %>
+<%= card.from_address_two %><br>
+<% end %>
+<%= card.from_city %>, <%= card.from_state %> <%= card.from_zip %><br>
+</div>
+
+<div class="col-xs-6">
+<strong>To:</strong><br>
+<%= card.to_name %><br>
+<%= card.to_address_one %><br>
+<% unless card.to_address_two.nil? or card.to_address_two == '' %>
+<%= card.to_address_two %><br>
+<% end %>
+<%= card.to_city %>, <%= card.to_state %> <%= card.to_zip %><br>
+</div>
+
+</div>
+
+<% unless card.postcard_message.nil? or card.postcard_message == '' %>
+<h6><strong>Message:</strong> <%= card.postcard_message %></h6>
+<% end %>
+
+</div>
+
+</td>
+</tr>

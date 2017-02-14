@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GramSend | send Instagram pictures as postcards for free</title>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= favicon_link_tag 'favicon.ico' %>
+	  <%= favicon_link_tag 'favicon.ico', rel: 'apple-touch-icon', type: 'image/png' %>
+    <%= csrf_meta_tags %>
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
+      </script>
+    <![endif]-->
+  </head>
+  
+  <body role="document">
+
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to "GRAMSEND", root_path, class: "navbar-brand" %>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><%= link_to "My account", ighome_path %></li>
+            <li><%= mail_to "gramsend@gmail.com", "Contact" %></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <% if session[:current_access_local].nil? %>
+            <li><%= link_to "Login", @InstaURL %></li>
+            <% else %>
+            <li><%= link_to "Logout @" + session[:insta_user_name], signout_path %></li>
+            <% end %>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+    <div class="container" role="main">
+      <%= yield %>
+    </div>
+
+      <div class="container" role="footer">
+      <div class="alert alert-warning text-center">
+      <p><strong>Copyright GramSend &copy; 2015 - Email us: <%= mail_to "gramsend@gmail.com", "gramsend@gmail.com", class: "alert-link" %></strong> <i class="glyphicon glyphicon-envelope"></i></p>
+      <p><em><small>GramSend is not affiliated with or endorsed by Instagram.</small></em></p>
+      </div>
+      </div>
+      
+      <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', '<%= ENV['GOOG_KEY'] %>']);
+        <% unless session[:current_access_local].nil? %>
+        _gaq.push(['_setCustomVar',
+            1,
+            'GS Internal ID',
+            '<%= session[:gramsend_user_id] %>',
+            3]);
+        <% end %>
+        _gaq.push(['_trackPageview']);
+
+      (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+    </script> 
+    
+  </body>
+</html>

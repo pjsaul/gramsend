@@ -1,0 +1,82 @@
+<div class="col-xs-9">
+
+<% flash.each do |key, value| %>
+      <div class="<%= flash_class(key) %>">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <%= value.html_safe %>
+      </div>
+<% end %>
+
+<div class="jumbotron">
+<div class="row">
+
+<div class="col-xs-7">
+<h2>@<%= session[:insta_user_name] %>'s GramSend account</h2>
+<ul class="list-group">
+  <li class="list-group-item">
+    <span class="badge"><%= @instauser["counts"]["media"] %></span>
+    How many posts you have on Instagram
+  </li>
+  <li class="list-group-item">
+    <span class="badge"><%= @instauser["counts"]["follows"] %></span>
+    How many accounts you are following
+  </li>
+  <li class="list-group-item">
+    <span class="badge"><%= @sentpostcards.count %></span>
+    How many GramSend's you have created
+  </li>
+</ul>
+</div>
+
+<div class="col-xs-5">
+  <img src="<%= @instauser["profile_picture"] %>" class="center-block img-responsive img-rounded">
+  <p> </p>
+  <div class="alert alert-success">
+  <strong>Use the menu on the right to create a new GramSend.</strong>
+  </div>
+</div>
+
+</div>
+</div>
+
+<% if @sentpostcards.count == 0 %>
+<h3>You have not sent any GramSends yet. Don't be shy!</h3>
+<p>Use the menu on the right to create a new one. It just takes three easy steps.</p>
+<div class="col-xs-10">
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h3 class="panel-title">Make your own GramSend</h3>
+  </div>
+  <div class="panel-body">
+<strong>
+<ol>
+<li>Select a post to send: from <%= link_to "your posts", igresponse_selffeed_path %>, <%= link_to "your feed", igresponse_mainfeed_path %>, or <%= link_to "your friend's posts", igresponse_friendlist_path %>.</li>
+<li>Enter your address, your friend's address, and a custom message.</li>
+<li>Press send, and your GramSend is in the mail.</li>
+</ol>
+</strong>
+    <p><%= image_tag "sample_front.png", class: "img-thumbnail listthumb" %> <%= image_tag "sample_back.png", class: "img-thumbnail listthumb" %></p>
+  </div>
+</div>
+</div>
+<% else %>
+<h3>Your GramSends</h3>
+<table class="table table-striped table-hover ">
+<tbody>
+<%= render partial: "singlesentcard", collection: @sentpostcardspage, as: :card %>
+</tbody>
+</table>
+<p>
+  <% unless @sentpostcardspage_max == 1 %>
+  <ul class="pager">
+  <li><%= link_to "Next page →",ighome_path(:start => @sentpostcardspage_nextstart) %></li>
+  </ul>
+  <% end %>
+</p>
+<% end %>
+
+</div>
+
+<div class="col-xs-3">
+<%= render :partial => "sidelinks", :locals => {:viewmode => "ighome"} %>
+</div>

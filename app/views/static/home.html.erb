@@ -1,0 +1,65 @@
+<div class="col-xs-8">
+  <div class="jumbotron">
+  <h1>Welcome <%= unless session[:current_access_local].nil? then "back " end %>to GramSend</h1>
+  <p>GramSend is a 100% free service that allows you to send your Instagram pictures to your friends and family as a postcard. Share your captions, likes, and comments across the world in seconds (plus shipping time)!</p>
+  <% if session[:current_access_local].nil? %>
+  <p><a class="btn btn-primary btn-lg" href="<%= @InstaURL %>" role="button">Login to Instagram to start</a></p>
+  <% else %>
+  <p><a class="btn btn-primary btn-lg" href="<%= ighome_path %>" role="button">Go to @<%= session[:insta_user_name] %>'s account</a></p>
+  <% end %>
+  </div>
+</div>
+  
+  <div class="col-xs-4">
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <% if session[:current_access_local].nil? %>
+    <h3 class="panel-title"><%= link_to "Make your own GramSend", @InstaURL %></h3>
+    <% else %>
+    <h3 class="panel-title"><%= link_to "Make your own GramSend", ighome_path %></h3>
+    <% end %>
+  </div>
+  <div class="panel-body">
+    <p><%= image_tag "sample_front.png", class: "img-thumbnail" %></p>
+    <p><%= image_tag "sample_back.png", class: "img-thumbnail" %></p>
+  </div>
+</div>
+</div>
+
+<div class="col-xs-8 col-xs-offset-2">
+  <div class="panel panel-danger">
+  <div class="panel-heading">
+    <h3 class="panel-title">It only takes 3 easy steps</h3>
+  </div>
+  <div class="panel-body">
+  <div class="row">
+    <div class="col-xs-4">
+    <h2>Step 1:<br>Choose the post you want to send</h2>
+    </div>
+    <div class="col-xs-8">
+    <%= image_tag "gs_demo1.png", class: "img-thumbnail img-responsive" %>
+    </div>
+  </div>
+  </div>
+  <div class="panel-body">
+  <div class="row">
+    <div class="col-xs-8">
+    <%= image_tag "gs_demo2.png", class: "img-thumbnail img-responsive" %>
+    </div>
+    <div class="col-xs-4">
+    <h2>Step 2:<br>Enter your address, your friend's address, and a custom message</h2>
+    </div>
+  </div>
+  </div>
+  <div class="panel-body">
+  <div class="row">
+    <div class="col-xs-4">
+    <h2>Step 3:<br>Your GramSend is on the way</h2>
+    </div>
+    <div class="col-xs-8">
+    <%= image_tag "gs_demo3.png", class: "img-thumbnail img-responsive" %>
+    </div>
+  </div>
+</div>
+</div>
+</div>

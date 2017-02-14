@@ -1,0 +1,27 @@
+<div class="col-xs-9">
+<h1>Send a GramSend from your feed</h1>
+
+<% if @pictures.count == 0 %>
+<h3>Sorry, there are no posts on your feed! :(</h3>
+<% else %>
+
+<table class="table table-striped table-hover ">
+<tbody>
+<%= render partial: "singlepost", collection: @pictures, as: :picture, :locals => {:viewmode => "mainfeed"} %>
+</tbody>
+</table>
+
+<p>
+  <% unless @pagination["next_max_id"].nil? %>
+  <ul class="pager">
+  <li><%= link_to "Next page →", igresponse_mainfeed_path(:max_id => @pagination["next_max_id"]) %></li>
+  </ul>
+  <% end %>
+</p>
+
+<% end %>
+</div>
+
+<div class="col-xs-3">
+<%= render :partial => "sidelinks", :locals => {:viewmode => "mainfeed"} %>
+</div>

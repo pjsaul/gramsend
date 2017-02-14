@@ -1,0 +1,13 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">Welcome <strong>@<%= session[:insta_user_name] %></strong>!</h3>
+  </div>
+  <div class="panel-body">
+    <ul class="nav nav-pills nav-stacked">
+  <li<%= if viewmode == "ighome" then " class=\"active\"".html_safe end %>><%= link_to "My GramSend account", ighome_path %></li>
+  <li<%= if viewmode == "selffeed" then " class=\"active\"".html_safe end %>><%= link_to "Create a GramSend from your posts", igresponse_selffeed_path %></li>
+  <li<%= if viewmode == "mainfeed" then " class=\"active\"".html_safe end %>><%= link_to "Create a GramSend from posts on your feed", igresponse_mainfeed_path %></li>
+  <li<%= if viewmode == "friendfeed" then " class=\"active\"".html_safe end %>><%= link_to "Create a GramSend from your friend's posts", igresponse_friendlist_path %></li>
+</ul>
+  </div>
+</div>

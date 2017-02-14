@@ -1,0 +1,15 @@
+<h1>Admin dashboard - user list</h1>
+
+<ul class="list-group">
+<% @users.each do |user| %>
+  <li class="list-group-item">
+    <span class="badge"><%= user.following_count %> following</span>
+    <span class="badge"><%= user.followers_count %> followers</span>
+    <span class="badge"><%= user.postcards.count %> cards sent</span>
+    <span class="badge"><%= user.pageviews %> pages</span>
+    <span class="badge"><%= user.formviews %> forms</span>
+    <strong>@<%= user.insta_name %></strong> <em><%= user.last_activity.strftime("%c") %></em>
+  </li>
+<% end %>
+</ul>
+

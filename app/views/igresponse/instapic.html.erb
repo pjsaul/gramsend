@@ -1,0 +1,151 @@
+<div class="row">
+  
+<h1>Create a new GramSend</h1>
+  
+<div class="col-xs-3">
+  <div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">GramSend this post</h3>
+  </div>
+  <div class="panel-body cutoff">
+    <h3>@<%= cleanup(@instapic["user"]["username"]) %></h3>
+    <img src="<%= @instapic["images"]["low_resolution"]["url"] %>" class="img-responsive img-rounded">
+    <% unless @instapic["caption"].nil? %>
+    <p><strong><%= simple_format(cleanup(@instapic["caption"]["text"]))  %></strong></p>
+    <% end %>
+    <% unless @instapic["location"].nil? %>
+    <% unless @instapic["location"]["name"].nil? %>
+    <p><small><i class="glyphicon glyphicon-map-marker"></i> <%= cleanup(@instapic["location"]["name"]) %></small></p>
+    <% end %>
+    <% end %>
+    <p><small><i class="glyphicon glyphicon-calendar"></i> <%= DateTime.strptime(@instapic["created_time"],'%s').strftime("%B %-d, %Y") %></small></p>
+    <p><small><i class="glyphicon glyphicon-heart"></i> <%= @instapic["likes"]["count"] %> likes</small></p>
+    <p><small><i class="glyphicon glyphicon-comment"></i>  <%= @instapic["comments"]["count"] %> comments</small></p>
+    <% if @instapic["comments"]["count"] > 0 %>
+    <p>
+    <% @instapic["comments"]["data"].each do |comment| %>
+    <small><strong><%= cleanup(comment["from"]["username"]) %>:</strong> <%= cleanup(comment["text"]) %></small><br>
+    <% end %>
+    </p>
+    <% end %>
+  </div>
+</div>
+</div>
+
+<div class="col-xs-9">
+<div class="well bs-component">
+  
+  <% if @newcard.errors.any? %>
+  <div class="alert alert-danger">
+    <h5>There were some errors that prevented your GramSend from being created.</h5>
+  </div>
+  <% end %>
+
+<%= form_for @newcard, url: igresponse_createpostcard_path, html: {class: "form-horizontal"} do |f| %>
+<%= f.hidden_field :insta_id %>
+<fieldset>
+  
+  <legend>From address</legend>
+  <div class="form-group">
+    <%= f.label :from_name, "Name", class: "col-xs-3 control-label" %>
+    <div class="col-xs-9">
+    <%= f.text_field :from_name, class: "form-control", :maxlength => 40 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :from_address_one, "Address line one", class: "col-xs-3 control-label" %>
+    <div class="col-xs-9">
+    <%= f.text_field :from_address_one, class: "form-control", :maxlength => 40 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :from_address_two, "Address line two", class: "col-xs-3 control-label" %>
+    <div class="col-xs-9">
+    <%= f.text_field :from_address_two, class: "form-control", :maxlength => 40 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :from_city, "City", class: "col-xs-3 control-label" %>
+    <div class="col-xs-3">
+    <%= f.text_field :from_city, class: "form-control", :maxlength => 30 %>
+    </div>
+    <%= f.label :from_state, "State", class: "col-xs-1 control-label" %>
+    <div class="col-xs-2">
+    <%= f.text_field :from_state, class: "form-control", :maxlength => 2 %>
+    </div>
+    <%= f.label :from_zip, "Zip", class: "col-xs-1 control-label" %>
+    <div class="col-xs-2">
+    <%= f.text_field :from_zip, class: "form-control", :maxlength => 5 %>
+    </div>
+  </div>
+  
+  <legend>To address (US only)</legend>
+  <div class="form-group">
+    <%= f.label :to_name, "Name", class: "col-xs-3 control-label" %>
+    <div class="col-xs-9">
+    <%= f.text_field :to_name, class: "form-control", :maxlength => 40 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :to_address_one, "Address line one", class: "col-xs-3 control-label" %>
+    <div class="col-xs-9">
+    <%= f.text_field :to_address_one, class: "form-control", :maxlength => 40 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :to_address_two, "Address line two", class: "col-xs-3 control-label" %>
+    <div class="col-xs-9">
+    <%= f.text_field :to_address_two, class: "form-control", :maxlength => 40 %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :to_city, "City", class: "col-xs-3 control-label" %>
+    <div class="col-xs-3">
+    <%= f.text_field :to_city, class: "form-control", :maxlength => 30 %>
+    </div>
+    <%= f.label :to_state, "State", class: "col-xs-1 control-label" %>
+    <div class="col-xs-2">
+    <%= f.text_field :to_state, class: "form-control", :maxlength => 2 %>
+    </div>
+    <%= f.label :to_zip, "Zip", class: "col-xs-1 control-label" %>
+    <div class="col-xs-2">
+    <%= f.text_field :to_zip, class: "form-control", :maxlength => 5 %>
+    </div>
+  </div>
+  
+  <legend>Personalization</legend>
+  <div class="form-group">
+    <%= f.label :postcard_message, "Message", class: "col-xs-3 control-label" %>
+    <div class="col-xs-9">
+    <%= f.text_area :postcard_message, class: "form-control", rows: "3" %>
+    <span class="help-block">An optional, custom message you can add to the back of the postcard. Maximum 250 characters. This will include your username.</span>
+    </div>
+  </div>
+  <div class="form-group">
+    <div class="col-xs-9 col-xs-offset-3">
+    <%= f.submit "Send new GramSend!", class: "center-block btn btn-primary multi-line-button", id: "myButton", data: { "loading-text" => "Creating...", "toggle" => "modal", "target" => ".bs-example-modal-sm" } %>
+    </div>
+  </div>
+</fieldset>
+<% end %>
+</div>
+</div>
+
+</div>
+
+<div class="modal fade bs-example-modal-sm" data-keyboard="false" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header"><h3 style="margin:0;">Creating your GramSend...</h3></div>
+      <div class="modal-body">
+        <div class="progress progress-striped active" style="margin-bottom:0;"><div class="progress-bar" style="width: 100%"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $('#myButton').on('click', function () {
+    var $btn = $(this).button('loading')
+  })
+</script>

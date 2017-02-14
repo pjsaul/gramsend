@@ -1,0 +1,25 @@
+<div class="col-xs-9">
+<h1>Send a GramSend from your friend's account</h1>
+
+<% if @pictures.count == 0 %>
+<h3>Sorry, this friend has no posts! :(</h3>
+<% else %>
+<table class="table table-striped table-hover ">
+<tbody>
+<%= render partial: "singlepost", collection: @pictures, as: :picture %>
+</tbody>
+</table>
+<p>
+  <% unless @pagination["next_max_id"].nil? %>
+  <ul class="pager">
+  <li><%= link_to "Next page →", friendfeed_path(:max_id => @pagination["next_max_id"]) %></li>
+  </ul>
+  <% end %>
+</p>
+<% end %>
+
+</div>
+
+<div class="col-xs-3">
+<%= render :partial => "sidelinks", :locals => {:viewmode => "friendfeed"} %>
+</div>
